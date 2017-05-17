@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace FireAndWaterGame
 {
-    class Field
+    public class Field
     {
-        private Terrain[,] field;
+        private Terrain[][] field;
 
         public readonly int Heigh;
         public readonly int Width;
@@ -21,7 +21,7 @@ namespace FireAndWaterGame
             {
                 if (GeometryAndArithmetic.InRange(row, 0, Heigh) &&
                     GeometryAndArithmetic.InRange(column, 0, Width))
-                    return field[row, column];
+                    return field[row][column];
                 else
                     throw new IndexOutOfRangeException();
             }
@@ -32,7 +32,32 @@ namespace FireAndWaterGame
             string map = level.Map;
             Heigh = map.Count(c => c == '>');
             Width = map.Length / Heigh;
-            field = new Terrain[Heigh, Width];
+            field = new Terrain[Heigh][];
+            var lines = map.Split('>');
+            
+            foreach (var row in Enumerable.Range(0, lines.Count()))
+            {
+                var line = lines[row];
+                field[row] = new Terrain[Width];
+                foreach (var column in Enumerable.Range(0, line.Length))
+                {
+                    var position = new Point(
+                        column * Constants.TerrainSquareLength,
+                        row * Constants.TerrainSquareLength);
+                    var symbol = line[column];
+                    if (symbol == '#')
+                        field[row][column] = new Terrain(position, TerrainType.FullSquare);
+                    if (symbol == '\\')
+                        field[row][column] = new Terrain(position, TerrainType.DownLeftTriangle);
+                    if (symbol == '/')
+                        field[row][column] = new Terrain(position, TerrainType.DownRightTriangle);
+                    if (symbol == 'L')
+                        field[row][column] = new Terrain(position, TerrainType.DownLeftTriangle);
+                    if (symbol == 'R')
+                        field[row][column] = new Terrain(position, TerrainType.DownLeftTriangle);
+
+                }
+            }
             //MovingObjects =
         }
     }

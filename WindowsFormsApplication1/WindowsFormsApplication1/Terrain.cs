@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FireAndWaterGame
 {
-    enum TerrainType
+    public enum TerrainType
     {
         Empty,
         FullSquare,
@@ -17,7 +17,7 @@ namespace FireAndWaterGame
         DownRightTriangle
     };
 
-    class Terrain
+    public class Terrain
     {
         public Point Position { get; private set; }
         public Size Size { get { return Constants.TerrainSize; } }

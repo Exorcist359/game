@@ -17,6 +17,7 @@ namespace FireAndWaterGame
         static Constants()
         {
             TerrainSize = new Size(TerrainSquareLength, TerrainSquareLength);
+            HeroSize = new Size(HeroWidth, HeroHeigh);
             Levels = new Dictionary<int, Level>();
             Levels[0] = new Level(0,
                 @"
@@ -30,9 +31,21 @@ namespace FireAndWaterGame
                 >############
                 "
                 );
+            Levels[1] = new Level(1,
+                @"
+                >############
+                >#L........R#
+                >#..........#
+                >#..........#
+                >#...####...#
+                >#..........#
+                >#\......../#
+                >############
+                "
+                );
         }
 
         public static Size TerrainSize { get; private set; }
-
+        public static Size HeroSize { get; internal set; }
     }
 }
