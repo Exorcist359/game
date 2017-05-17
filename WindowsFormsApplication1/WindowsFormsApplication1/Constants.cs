@@ -20,16 +20,14 @@ namespace FireAndWaterGame
             HeroSize = new Size(HeroWidth, HeroHeigh);
             Levels = new Dictionary<int, Level>();
             Levels[0] = new Level(0,
-                @"
->############
+@">############
 >#..........#
 >#..........#
 >#..........#
 >#...####...#
 >#..........#
 >#..........#
->############
-"
+>############"
                 );
             Levels[1] = new Level(1,
                 @"

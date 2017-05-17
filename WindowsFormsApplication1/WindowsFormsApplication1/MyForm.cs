@@ -27,7 +27,7 @@ namespace WindowsFormsApplication1
                 for (var row = 0; row < game.Field.Heigh; row++)
                     for (var column = 0; column < game.Field.Width; column++)
                     {
-                        if (game.Field[row, column] is Terrain)
+                        if (game.Field[row, column].Type == TerrainType.FullSquare)
                         {
                             Bitmap myBitmap = new Bitmap(@"A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\simple_terrain.jpg");
                             myGraphics.DrawImage(myBitmap, game.Field[row, column].Position);
