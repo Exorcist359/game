@@ -35,11 +35,11 @@ namespace FireAndWaterGame
             field = new Terrain[Heigh][];
             var lines = map.Split('>');
             
-            foreach (var row in Enumerable.Range(0, lines.Count()))
+            foreach (var row in Enumerable.Range(0, lines.Count() - 1))
             {
                 var line = lines[row];
                 field[row] = new Terrain[Width];
-                foreach (var column in Enumerable.Range(0, line.Length))
+                foreach (var column in Enumerable.Range(0, line.Length - 1))
                 {
                     var position = new Point(
                         column * Constants.TerrainSquareLength,
