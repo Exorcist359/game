@@ -34,7 +34,9 @@ namespace FireAndWaterGame
             Width = map.Length / Heigh;
             field = new Terrain[Heigh][];
             var lines = map.Split('>');
-            
+
+            Hero waterHero = null, fireHero = null;
+
             foreach (var row in Enumerable.Range(0, lines.Count() - 1))
             {
                 var line = lines[row];
@@ -47,16 +49,32 @@ namespace FireAndWaterGame
                     var symbol = line[column];
                     if (symbol == '#')
                         field[row][column] = new Terrain(position, TerrainType.FullSquare);
-                    if (symbol == '\\')
+                    else if (symbol == '\\')
                         field[row][column] = new Terrain(position, TerrainType.DownLeftTriangle);
-                    if (symbol == '/')
+                    else if (symbol == '/')
                         field[row][column] = new Terrain(position, TerrainType.DownRightTriangle);
-                    if (symbol == 'L')
+                    else if (symbol == 'L')
                         field[row][column] = new Terrain(position, TerrainType.DownLeftTriangle);
-                    if (symbol == 'R')
+                    else if (symbol == 'R')
                         field[row][column] = new Terrain(position, TerrainType.DownLeftTriangle);
+                    else
+                        field[row][column] = new Terrain(position, TerrainType.Empty);
 
+                    var heroPosition = new Point(
+                        position.X + (Constants.TerrainSquareLength - Constants.HeroWidth) / 2,
+                        position.Y + (Constants.TerrainSquareLength * 2 - Constants.HeroHeigh));
+                    if (symbol == 'W' && waterHero == null)
+                    {
+                        waterHero = new Hero(heroPosition, ElementType.Water, this);
+                        MovingObjects.Add(waterHero);
+                    }
+                    if (symbol == 'F' && fireHero == null)
+                    {
+                        fireHero = new Hero(heroPosition, ElementType.Fire, this);
+                        MovingObjects.Add(fireHero);
+                    }
                 }
+                
             }
             //MovingObjects =
         }
