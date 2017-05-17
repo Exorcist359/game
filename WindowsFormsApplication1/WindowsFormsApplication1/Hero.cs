@@ -27,6 +27,14 @@ namespace FireAndWaterGame
             }
         }
 
+        public Size Size
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public Hero(Point position, ElementType type)
         {
             Position = new Point(position.X, position.Y);

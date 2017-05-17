@@ -11,8 +11,8 @@ namespace FireAndWaterGame
     {
         private Terrain[,] field;
 
-        public readonly int Width;
         public readonly int Heigh;
+        public readonly int Width;
         public readonly List<IMovingObjects> MovingObjects;
 
         public Terrain this[int row, int column]
@@ -30,9 +30,9 @@ namespace FireAndWaterGame
         public Field(Level level)
         {
             string map = level.Map;
-            //Width = 
-            //Heigh = 
-            //field =
+            Heigh = map.Count(c => c == '>');
+            Width = map.Length / Heigh;
+            field = new Terrain[Heigh, Width];
             //MovingObjects =
         }
     }

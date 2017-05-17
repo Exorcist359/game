@@ -10,5 +10,7 @@ namespace FireAndWaterGame
         void MoveRight();
         void MoveDown();
         void MoveUp();
+        Size Size { get; }
+
     }
 }
