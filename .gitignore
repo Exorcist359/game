@@ -48,3 +48,7 @@ Temporary Items
 
 # My files
 *.suo
+/bin/*
+/debug/*
+/WindowsFormsApplication1/WindowsFormsApplication1/obj/Debug/WindowsFormsApplication1.exe
+*.exe
