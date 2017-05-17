@@ -13,6 +13,7 @@ namespace FireAndWaterGame
         public ElementType Type { get; private set; }
         public Point Position { get; private set; }
         public Point StartPosition { get; private set; }
+        public Field Field { get; private set; }
         public string Image
         {
             get
@@ -31,14 +32,15 @@ namespace FireAndWaterGame
         {
             get
             {
-                throw new NotImplementedException();
+                return Constants.HeroSize;
             }
         }
 
-        public Hero(Point position, ElementType type)
+        public Hero(Point position, ElementType type, Field field)
         {
             Position = new Point(position.X, position.Y);
             Type = type;
+            Field = field;
         }
 
         public void MoveLeft()

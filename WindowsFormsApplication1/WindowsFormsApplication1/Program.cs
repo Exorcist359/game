@@ -14,6 +14,7 @@ namespace WindowsFormsApplication1
         [STAThread]
         static void Main()
         {
+            var game = new FireAndWaterGame.Game();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

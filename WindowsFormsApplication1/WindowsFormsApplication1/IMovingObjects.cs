@@ -4,6 +4,7 @@ namespace FireAndWaterGame
 {
     public interface IMovingObjects
     {
+        Field Field { get; }
         Point Position { get; }
         Point StartPosition { get; }
         void MoveLeft();

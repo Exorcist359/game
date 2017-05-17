@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FireAndWaterGame
 {
-    class Level
+    public class Level
     {
         public readonly int Id;
         public readonly string Map;
