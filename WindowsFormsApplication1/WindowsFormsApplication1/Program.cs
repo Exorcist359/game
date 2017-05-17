@@ -10,14 +10,12 @@ namespace WindowsFormsApplication1
     {
         /// <summary>
         /// Главная точка входа для приложения.
-        /// олололо
         /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            
             Application.Run(new Form1());
         }
     }
