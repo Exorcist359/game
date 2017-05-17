@@ -17,6 +17,7 @@ namespace FireAndWaterGame
         static Constants()
         {
             TerrainSize = new Size(TerrainSquareLength, TerrainSquareLength);
+            Levels = new Dictionary<int, Level>();
             Levels[0] = new Level(0,
                 @"
                 >############
