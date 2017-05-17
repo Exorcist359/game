@@ -48,3 +48,6 @@ Temporary Items
 
 # My files
 *.suo
+/bin/*
+/obj/*
+*.exe
