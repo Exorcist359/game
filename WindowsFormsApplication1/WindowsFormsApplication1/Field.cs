@@ -29,17 +29,16 @@ namespace FireAndWaterGame
 
         public Field(Level level)
         {
-            string map = level.Map;
-            Heigh = map.Count(c => c == '>');
-            Width = map.Length / Heigh;
+            var map = level.Map;
+            Heigh = map.Length;
+            Width = map[0].Length;
             field = new Terrain[Heigh][];
-            var lines = map.Split('>');
 
             Hero waterHero = null, fireHero = null;
 
-            foreach (var row in Enumerable.Range(0, lines.Count() - 1))
+            foreach (var row in Enumerable.Range(0, Heigh))
             {
-                var line = lines[row];
+                var line = map[row];
                 field[row] = new Terrain[Width];
                 foreach (var column in Enumerable.Range(0, line.Length - 1))
                 {
@@ -76,6 +75,7 @@ namespace FireAndWaterGame
                 }
                 
             }
+            int x = 0;
             //MovingObjects =
         }
     }

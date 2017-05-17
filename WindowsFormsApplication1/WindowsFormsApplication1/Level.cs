@@ -9,9 +9,9 @@ namespace FireAndWaterGame
     public class Level
     {
         public readonly int Id;
-        public readonly string Map;
+        public readonly string[] Map;
 
-        public Level(int id, string map)
+        public Level(int id, string[] map)
         {
             Id = id;
             Map = map;
