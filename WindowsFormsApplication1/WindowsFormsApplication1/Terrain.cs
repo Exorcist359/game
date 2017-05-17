@@ -7,14 +7,28 @@ using System.Threading.Tasks;
 
 namespace FireAndWaterGame
 {
+    enum TerrainType
+    {
+        Empty,
+        FullSquare,
+        DownLeftTriangle,
+        UpLeftTriangle,
+        UpRightTriangle,
+        DownRightTriangle
+    };
+
     class Terrain
     {
         public Point Position { get; private set; }
-        public static string Image = "images//simple_terrain.jpg";
+        public Size Size { get { return Constants.TerrainSize; } }
+        public readonly TerrainType Type;
 
-        public Terrain(Point position)
+        public string Image = "images//simple_terrain.jpg";
+
+        public Terrain(Point position, TerrainType type)
         {
             Position = new Point(position.X, position.Y);
+            Type = type;
         }
     }
 }

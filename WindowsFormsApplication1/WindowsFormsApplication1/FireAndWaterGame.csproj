@@ -48,11 +48,11 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Field.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="!FormHelper.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="!FormHelper.Designer.cs">
+      <DependentUpon>!FormHelper.cs</DependentUpon>
     </Compile>
     <Compile Include="Game.cs" />
     <Compile Include="GeometryAndArithmetic.cs" />
@@ -83,6 +83,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="images\simple_fire.jpg" />
+    <Content Include="images\simple_terrain.jpg" />
+    <Content Include="images\simple_water.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
