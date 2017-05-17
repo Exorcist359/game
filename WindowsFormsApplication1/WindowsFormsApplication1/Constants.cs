@@ -12,7 +12,7 @@ namespace FireAndWaterGame
         public static readonly Dictionary<int, Level> Levels;
         public static readonly int TerrainSquareLength = 100;
         public static readonly int HeroHeigh = 120;
-        public static readonly int HeroWidth = 60;
+        public static readonly int HeroWidth = 80;
 
         static Constants()
         {
