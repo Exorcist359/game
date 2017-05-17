@@ -35,7 +35,7 @@ namespace FireAndWaterGame
             field = new Terrain[Heigh][];
             var lines = map.Split('>');
             
-            foreach (var row in Enumerable.Range(0, lines.Count()))
+            foreach (var row in Enumerable.Range(0, lines.Count()-1))
             {
                 var line = lines[row];
                 field[row] = new Terrain[Width];
