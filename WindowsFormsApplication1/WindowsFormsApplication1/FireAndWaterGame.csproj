@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="!FormHelper.cs">
@@ -62,6 +65,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Terrain.cs" />
+    <EmbeddedResource Include="!FormHelper.resx">
+      <DependentUpon>!FormHelper.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -85,6 +91,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="images\background.jpg" />
     <Content Include="images\simple_fire.jpg" />
     <Content Include="images\simple_terrain.jpg" />
     <Content Include="images\simple_water.jpg" />
