@@ -27,6 +27,7 @@ namespace FireAndWaterGame
                 return "images//simple" + typeName;
             }
         }
+        private List<Point> Moves;
 
         public Size Size
         {
@@ -42,18 +43,28 @@ namespace FireAndWaterGame
             StartPosition = new Point(position.X, position.Y);
             Type = type;
             Field = field;
+            Moves = new List<Point>();
         }
 
+        public void RealiseMoves()
+        {
+            foreach(var move in Moves)
+            {
+                var newPosition = new Point(Position.X + move.X, Position.Y + move.Y);
+                MoveOnNewPosition(newPosition);
+            }
+
+        }
         public void MoveLeft()
         {
-            var newPosition = new Point(Position.X - Constants.Step, Position.Y);
-            MoveOnNewPosition(newPosition);
+            var move = new Point(-Constants.Step, 0);
+            Moves.Add(move);
         }
 
         public void MoveRight()
         {
-            var newPosition = new Point(Position.X + Constants.Step, Position.Y);
-            MoveOnNewPosition(newPosition);
+            var move = new Point(Constants.Step, 0);
+            Moves.Add(move);
         }
 
         private void MoveOnNewPosition(Point newPosition)
@@ -90,12 +101,10 @@ namespace FireAndWaterGame
 
         public void MoveDown()
         {
-            throw new NotImplementedException();
         }
 
         public void MoveUp()
         {
-            throw new NotImplementedException();
         }
     }
 }

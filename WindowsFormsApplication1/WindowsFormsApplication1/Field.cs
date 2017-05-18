@@ -15,6 +15,8 @@ namespace FireAndWaterGame
         public readonly int Heigh;
         public readonly int Width;
         public readonly List<IMovingObjects> MovingObjects;
+        public readonly Hero WaterHero;
+        public readonly Hero FireHero;
 
         public Field(Level level, Game game)
         {
@@ -23,12 +25,11 @@ namespace FireAndWaterGame
             Width = map[0].Length;
             field = new List<List<Terrain>>();
             MovingObjects = new List<IMovingObjects>();
-            game.WaterHero = null;
-            game.FireHero = null;
+            WaterHero = null;
+            FireHero = null;
 
             foreach (var row in Enumerable.Range(0, Heigh))
             {
-                var line = map[row];
                 var list = new List<Terrain>();
                 field.Add(list);
                 foreach (var column in Enumerable.Range(0, Width))
@@ -36,7 +37,7 @@ namespace FireAndWaterGame
                     var position = new Point(
                         column * Constants.TerrainSquareLength,
                         row * Constants.TerrainSquareLength);
-                    var symbol = line[column];
+                    var symbol = map[row][column];
                     if (symbol == '#')
                         list.Add(new Terrain(position, TerrainType.FullSquare, row, column));
                     else if (symbol == '\\')
@@ -53,20 +54,18 @@ namespace FireAndWaterGame
                     var heroPosition = new Point(
                         position.X + (Constants.TerrainSquareLength - Constants.HeroWidth) / 2,
                         position.Y + (Constants.TerrainSquareLength * 2 - Constants.HeroHeigh));
-                    if (symbol == 'W' && game.WaterHero == null)
+                    if (symbol == 'W' && WaterHero == null)
                     {
-                        game.WaterHero = new Hero(heroPosition, ElementType.Water, this);
-                        MovingObjects.Add(game.WaterHero);
+                        WaterHero = new Hero(heroPosition, ElementType.Water, this);
+                        MovingObjects.Add(WaterHero);
                     }
-                    if (symbol == 'F' && game.FireHero == null)
+                    if (symbol == 'F' && FireHero == null)
                     {
-                        game.FireHero = new Hero(heroPosition, ElementType.Fire, this);
-                        MovingObjects.Add(game.FireHero);
+                        FireHero = new Hero(heroPosition, ElementType.Fire, this);
+                        MovingObjects.Add(FireHero);
                     }
                 }
-                
             }
-            //MovingObjects =
         }
 
         public Terrain this[int row, int column]
