@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace FireAndWaterGame
 {
-    class Game
+    public class Game
     {
         public readonly Level Level; // ? public ?
         public Field Field { get; private set; }
+        public Hero WaterHero { get; set; }
+        public Hero FireHero { get; set; }
+
 
         public Game() : this(0)
         {
@@ -27,7 +30,7 @@ namespace FireAndWaterGame
 
         private void InitializeLevel()
         {
-            Field = new Field(Level);
+            Field = new Field(Level, this);
 
         }
     }
