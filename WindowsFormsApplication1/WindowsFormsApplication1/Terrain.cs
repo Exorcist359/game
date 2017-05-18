@@ -22,13 +22,17 @@ namespace FireAndWaterGame
         public Point Position { get; private set; }
         public Size Size { get { return Constants.TerrainSize; } }
         public readonly TerrainType Type;
+        public readonly int RowIndex;
+        public readonly int ColumnIndex;
 
         public string Image = "images//simple_terrain.jpg";
 
-        public Terrain(Point position, TerrainType type)
+        public Terrain(Point position, TerrainType type, int rowIndex, int columnIndex)
         {
             Position = new Point(position.X, position.Y);
             Type = type;
+            RowIndex = rowIndex;
+            ColumnIndex = columnIndex;
         }
     }
 }

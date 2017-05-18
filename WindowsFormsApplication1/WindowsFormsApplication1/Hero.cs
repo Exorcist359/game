@@ -46,10 +46,39 @@ namespace FireAndWaterGame
 
         public void MoveLeft()
         {
-            throw new NotImplementedException();
+            var newPosition = new Point(Position.X - Constants.Step, Position.Y);
+            MoveOnNewPosition(newPosition);
         }
 
         public void MoveRight()
+        {
+            var newPosition = new Point(Position.X + Constants.Step, Position.Y);
+            MoveOnNewPosition(newPosition);
+        }
+
+        private void MoveOnNewPosition(Point newPosition)
+        {
+            var rect = new Rectangle(newPosition, Size);
+            if (!DoesIntersect(rect))
+            {
+                Position = newPosition;
+            }
+        }
+
+        private bool DoesIntersect(Rectangle heroRect)
+        {
+            foreach (var terr in Field)
+            {
+                var terrRect = new Rectangle(terr.Position, terr.Size);
+                if (heroRect.IntersectsWith(terrRect))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void Jump()
         {
             throw new NotImplementedException();
         }
