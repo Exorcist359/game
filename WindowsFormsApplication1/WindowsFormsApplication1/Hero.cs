@@ -69,11 +69,15 @@ namespace FireAndWaterGame
         {
             foreach (var terr in Field)
             {
-                if (terr.Type == TerrainType.Empty) continue;
+                if (terr.Type == TerrainType.Empty)
+                    continue;
                 var terrRect = new Rectangle(terr.Position, terr.Size);
+                
                 if (heroRect.IntersectsWith(terrRect))
                 {
-                    return true;
+                    terrRect.Intersect(heroRect);
+                    if (!terrRect.IsEmpty)
+                        return true;
                 }
             }
             return false;
