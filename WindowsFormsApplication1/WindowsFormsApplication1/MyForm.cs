@@ -13,6 +13,7 @@ namespace WindowsFormsApplication1
     {
         public MyForm()
         {
+
             var game = new Game();
             ClientSize = new Size(Constants.TerrainSquareLength * game.Field.Width, 
                                     Constants.TerrainSquareLength * game.Field.Heigh);
@@ -35,19 +36,28 @@ namespace WindowsFormsApplication1
             PaintEventHandler drawingHeroes = (sender, args) => {
                 //???Поменять картинку на прямоугольник с кистью картинки
                 Bitmap myBitmap = new Bitmap(@"A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\simple_fire.jpg");
-                myOwnGraphics.DrawImage(myBitmap, game.FireHero.StartPosition);
+                myOwnGraphics.DrawImage(myBitmap, game.FireHero.Position);
             };
 
             Paint += drawingField + drawingHeroes;
             Invalidate();
-
             KeyPress += (sender, args) =>
             {
                 if (args.KeyChar.ToString().ToLower() == "d")
                     game.FireHero.MoveRight();
+                if (args.KeyChar.ToString().ToLower() == "a")
+                    game.FireHero.MoveLeft();
+            };
+
+            var time = 0;
+            var timer = new Timer();
+            timer.Interval = 500;
+            timer.Tick += (sender, args) =>
+            {
+                time++;
                 Invalidate();
             };
-            
+            timer.Start();
         }
     }
 }
