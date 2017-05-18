@@ -41,7 +41,6 @@ namespace WindowsFormsApplication1
             Paint += drawingField + drawingHeroes;
             Invalidate();
             //Paint -= drawingField;
-            
 
         }
     }

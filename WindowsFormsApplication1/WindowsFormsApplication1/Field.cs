@@ -21,6 +21,7 @@ namespace FireAndWaterGame
             var map = level.Map;
             Heigh = map.Length;
             Width = map[0].Length;
+            MovingObjects = new List<IMovingObjects>();
             field = new List<List<Terrain>>();
 
             Hero waterHero = null, fireHero = null;
