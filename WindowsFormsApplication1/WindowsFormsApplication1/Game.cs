@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FireAndWaterGame
 {
-    class Game
+    public class Game
     {
         public readonly Level Level; // ? public ?
         public Field Field { get; private set; }

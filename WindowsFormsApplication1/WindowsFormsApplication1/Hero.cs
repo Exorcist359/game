@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace FireAndWaterGame
 {
-    enum ElementType { Fire, Water }
-    class Hero : IMovingObjects
+    public enum ElementType { Fire, Water }
+    public class Hero : IMovingObjects
     {
         public ElementType Type { get; private set; }
         public Point Position { get; private set; }

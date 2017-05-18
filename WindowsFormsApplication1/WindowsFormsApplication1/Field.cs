@@ -22,7 +22,7 @@ namespace FireAndWaterGame
             Heigh = map.Length;
             Width = map[0].Length;
             field = new List<List<Terrain>>();
-
+            MovingObjects = new List<IMovingObjects>();
             game.WaterHero = null;
             game.FireHero = null;
 
