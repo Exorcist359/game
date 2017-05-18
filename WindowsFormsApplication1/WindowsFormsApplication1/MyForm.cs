@@ -50,16 +50,19 @@ namespace WindowsFormsApplication1
             {
                 switch (args.KeyCode)
                 {
+
                     case Keys.D:
                         game.Field.FireHero.MoveRight();
+                        fireImg = Image.FromFile(path + "fireboyR.png");
                         break;
-
+                        
                     case Keys.A:
                         game.Field.FireHero.MoveLeft();
-                        fireImg = Image.FromFile(path + "fireboy2.png");
+                        fireImg = Image.FromFile(path + "fireboyL.png");
                         break;
 
                     case Keys.W:
+                        game.Field.FireHero.MoveLeft();
                         game.Field.FireHero.Jump();
                         break;
 
