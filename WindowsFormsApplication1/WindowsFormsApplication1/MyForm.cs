@@ -18,7 +18,7 @@ namespace WindowsFormsApplication1
             ClientSize = new Size(Constants.TerrainSquareLength * game.Field.Width, 
                                     Constants.TerrainSquareLength * game.Field.Heigh);
 
-            var path = @"A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\";
+            var path = @"C:\Users\dns\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\";
             BackgroundImage = Image.FromFile(path + "background.jpg");
 
             var pathToFireImg = path + "fireboy_face.png";
