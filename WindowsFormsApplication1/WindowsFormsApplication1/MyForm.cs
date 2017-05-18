@@ -15,31 +15,33 @@ namespace WindowsFormsApplication1
         {
             DoubleBuffered = true;
             var game = new Game();
-            ClientSize = new Size(Constants.TerrainSquareLength * game.Field.Width, 
-                                    Constants.TerrainSquareLength * game.Field.Heigh);
+            ClientSize = new Size(Constants.TerrainSquareLength * game.Field.Width / Constants.koef, 
+                                    Constants.TerrainSquareLength * game.Field.Heigh / Constants.koef);
 
             var path = @"A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\";
+
             BackgroundImage = Image.FromFile(path + "background.jpg");
 
-            var pathToFireImg = path + "fireboy_face.png";
-            var pathToWaterImg = Image.FromFile(path + "simple_water.jpg");
+            var fireImg = Image.FromFile(path + "fireboy_face.png");
+            var waterImg = Image.FromFile(path + "simple_water.jpg");
+            var terrainImg = Image.FromFile(path + "terrain.png");
 
             PaintEventHandler drawingField = (sender, args) => {
-                for (var row = 0; row < game.Field.Heigh; row++)
-                    for (var column = 0; column < game.Field.Width; column++)
-                    {
-                        if (game.Field[row, column].Type == TerrainType.FullSquare)
+                foreach (var cell in game.Field)
+                        if (cell.Type == TerrainType.FullSquare)
                         {
-                            Bitmap myBitmap = new Bitmap(path + "terrain.png");
-                            args.Graphics.DrawImage(myBitmap, game.Field[row, column].Position);
+                            args.Graphics.DrawImage(terrainImg, 
+                                cell.Position.X / Constants.koef, 
+                                cell.Position.Y / Constants.koef);
                         }
-                    }
-
-                Bitmap hero = new Bitmap(pathToFireImg);
-                args.Graphics.DrawImage(hero, game.Field.FireHero.Position);
-
-                hero = new Bitmap(pathToWaterImg);
-                args.Graphics.DrawImage(hero, game.Field.WaterHero.Position);
+                
+                args.Graphics.DrawImage(fireImg, 
+                    game.Field.FireHero.Position.X / Constants.koef, 
+                    game.Field.FireHero.Position.Y / Constants.koef);
+                
+                args.Graphics.DrawImage(waterImg,
+                    game.Field.WaterHero.Position.X / Constants.koef,
+                    game.Field.WaterHero.Position.Y / Constants.koef);
             };
 
             Paint += drawingField;
@@ -50,11 +52,15 @@ namespace WindowsFormsApplication1
                 {
                     case Keys.D:
                         game.Field.FireHero.MoveRight();
-                        pathToFireImg = path + "1.gif";
                         break;
 
                     case Keys.A:
                         game.Field.FireHero.MoveLeft();
+                        fireImg = Image.FromFile(path + "fireboy2.png");
+                        break;
+
+                    case Keys.W:
+                        game.Field.FireHero.Jump();
                         break;
 
                     case Keys.Right:
@@ -73,7 +79,8 @@ namespace WindowsFormsApplication1
                 switch (args.KeyCode)
                 {
                     case Keys.D:
-                        pathToFireImg = path + "fireboy_face.png";
+                    case Keys.A:
+                        fireImg = Image.FromFile(path + "fireboy_face.png");
                         break;
                 }
             };

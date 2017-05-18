@@ -53,8 +53,8 @@ namespace FireAndWaterGame
                         list.Add(new Terrain(position, TerrainType.Empty, row, column));
 
                     var heroPosition = new Point(
-                        position.X + (Constants.TerrainSquareLength - Constants.HeroWidth) / 2,
-                        position.Y + (Constants.TerrainSquareLength * 2 - Constants.HeroHeigh));
+                        position.X + (Constants.TerrainSquareLength * 2 - Constants.HeroWidth) / 2,
+                        position.Y + (Constants.TerrainSquareLength * 3 - Constants.HeroHeigh));
                     if (symbol == 'W' && WaterHero == null)
                     {
                         WaterHero = new Hero(heroPosition, ElementType.Water, this);

@@ -11,7 +11,7 @@ namespace FireAndWaterGame
     {
         public static readonly int koef = 100;
         public static readonly Dictionary<int, Level> Levels;
-        public static readonly int TerrainSquareLength = 5000;
+        public static readonly int TerrainSquareLength = 2500;
         public static readonly int HeroHeigh = 7000;
         public static readonly int HeroWidth = 4000;
         public static readonly int Step = 1000;
@@ -26,14 +26,20 @@ namespace FireAndWaterGame
 
             Levels = new Dictionary<int, Level>();
             Levels[0] = new Level(0, new string[]
-            { "############",
-              "#..........#",
-              "#..........#",
-              "#..........#",
-              "#...####...#",
-              "#...F..W...#",
-              "#...F..W...#",
-              "############"
+            { "########################",
+              "#......................#",
+              "#......................#",
+              "#......................#",
+              "#......................#",
+              "#......................#",
+              "#......................#",
+              "#.............###......#",
+              "#......................#",
+              "#......................#",
+              "#........FF............#",
+              "#........FF..........W.#",
+              "#........FF..........W.#",
+              "########################"
             });
             Levels[1] = new Level(1, new string[]
             { "############",
