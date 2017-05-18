@@ -15,37 +15,37 @@ namespace WindowsFormsApplication1
         {
             DoubleBuffered = true;
             var game = new Game();
-            ClientSize = new Size(Constants.TerrainSquareLength * game.Field.Width / Constants.koef, 
-                                    Constants.TerrainSquareLength * game.Field.Heigh / Constants.koef);
-            BackgroundImage = Image.FromFile(@"C:\Users\dns\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\background.jpg");
- 
+            ClientSize = new Size(Constants.TerrainSquareLength * game.Field.Width, 
+                                    Constants.TerrainSquareLength * game.Field.Heigh);
+
+            var path = @"A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\";
+            BackgroundImage = Image.FromFile(path + "background.jpg");
+
+            var pathToFireImg = path + "fireboy_face.png";
+            var pathToWaterImg = Image.FromFile(path + "simple_water.jpg");
+
             PaintEventHandler drawingField = (sender, args) => {
                 for (var row = 0; row < game.Field.Heigh; row++)
                     for (var column = 0; column < game.Field.Width; column++)
                     {
                         if (game.Field[row, column].Type == TerrainType.FullSquare)
                         {
-                            Bitmap myBitmap = new Bitmap(@"C:\Users\dns\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\simple_terrain.jpg");
-                            args.Graphics.DrawImage(myBitmap, new Point(game.Field[row, column].Position.X / Constants.koef, game.Field[row, column].Position.Y / Constants.koef));
-
+                            Bitmap myBitmap = new Bitmap(path + "terrain.png");
+                            args.Graphics.DrawImage(myBitmap, game.Field[row, column].Position);
                         }
                     }
-                Bitmap hero = new Bitmap(@"C:\Users\dns\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\simple_fire.jpg");
-                args.Graphics.DrawImage(hero, new Point(game.Field.FireHero.Position.X / Constants.koef, game.Field.FireHero.Position.Y / Constants.koef));
-                hero = new Bitmap(@"C:\Users\dns\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\simple_water.jpg");
-                args.Graphics.DrawImage(hero, new Point(game.Field.WaterHero.Position.X / Constants.koef, game.Field.WaterHero.Position.Y / Constants.koef));
+
+                Bitmap hero = new Bitmap(pathToFireImg);
+                args.Graphics.DrawImage(hero, game.Field.FireHero.Position);
+
+                hero = new Bitmap(pathToWaterImg);
+                args.Graphics.DrawImage(hero, game.Field.WaterHero.Position);
             };
 
             Paint += drawingField;
-             Invalidate();
+
             KeyDown += (sender, args) =>
             {
-                //if (args.KeyCode == Keys.D)
-                //    game.FireHero.MoveRight();
-                //if (args.KeyCode == Keys.A)
-                //    game.FireHero.MoveLeft();
-                
-
                 switch (args.KeyCode)
                 {
                     case Keys.W:
@@ -54,6 +54,7 @@ namespace WindowsFormsApplication1
 
                     case Keys.D:
                         game.Field.FireHero.MoveRight();
+                        pathToFireImg = path + "1.gif";
                         break;
 
                     case Keys.A:
@@ -71,6 +72,16 @@ namespace WindowsFormsApplication1
                 
             };
 
+            KeyUp += (sender, args) =>
+            {
+                switch (args.KeyCode)
+                {
+                    case Keys.D:
+                        pathToFireImg = path + "fireboy_face.png";
+                        break;
+                }
+            };
+
             var time = 0;
             var timer = new Timer();
             timer.Interval = 5;
@@ -79,6 +90,7 @@ namespace WindowsFormsApplication1
                 time++;
                 game.Tick();
                 Invalidate();
+
             };
             timer.Start();
         }
