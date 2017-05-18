@@ -29,7 +29,8 @@ namespace FireAndWaterGame
 
         public void Tick()
         {
-
+            Field.WaterHero.RealiseMoves();
+            Field.FireHero.RealiseMoves();
         }
 
         private void InitializeLevel()

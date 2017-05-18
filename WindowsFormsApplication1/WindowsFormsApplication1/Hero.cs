@@ -53,8 +53,9 @@ namespace FireAndWaterGame
                 var newPosition = new Point(Position.X + move.X, Position.Y + move.Y);
                 MoveOnNewPosition(newPosition);
             }
-
+            Moves = new List<Point>();
         }
+
         public void MoveLeft()
         {
             var move = new Point(-Constants.Step, 0);

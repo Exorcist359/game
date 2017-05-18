@@ -31,9 +31,9 @@ namespace WindowsFormsApplication1
                         }
                     }
                 Bitmap hero = new Bitmap(@"A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\simple_fire.jpg");
-                args.Graphics.DrawImage(hero, game.FireHero.Position);
+                args.Graphics.DrawImage(hero, game.Field.FireHero.Position);
                 hero = new Bitmap(@"A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\simple_water.jpg");
-                args.Graphics.DrawImage(hero, game.WaterHero.Position);
+                args.Graphics.DrawImage(hero, game.Field.WaterHero.Position);
             };
 
             Paint += drawingField;
@@ -49,19 +49,19 @@ namespace WindowsFormsApplication1
                 switch (args.KeyCode)
                 {
                     case Keys.D:
-                        game.FireHero.MoveRight();
+                        game.Field.FireHero.MoveRight();
                         break;
 
                     case Keys.A:
-                        game.FireHero.MoveLeft();
+                        game.Field.FireHero.MoveLeft();
                         break;
 
                     case Keys.Right:
-                        game.WaterHero.MoveRight();
+                        game.Field.WaterHero.MoveRight();
                         break;
 
                     case Keys.Left:
-                        game.WaterHero.MoveLeft();
+                        game.Field.WaterHero.MoveLeft();
                         break;
                 }
                 
