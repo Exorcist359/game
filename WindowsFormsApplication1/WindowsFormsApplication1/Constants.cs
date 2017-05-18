@@ -10,7 +10,7 @@ namespace FireAndWaterGame
     static class Constants
     {
         public static readonly Dictionary<int, Level> Levels;
-        public static readonly int TerrainSquareLength = 50;
+        public static readonly int TerrainSquareLength = 25;
         public static readonly int HeroHeigh = 70;
         public static readonly int HeroWidth = 40;
         public static readonly int Step = 10;
@@ -22,14 +22,14 @@ namespace FireAndWaterGame
 
             Levels = new Dictionary<int, Level>();
             Levels[0] = new Level(0, new string[]
-            { "############",
-              "#..........#",
-              "#..........#",
-              "#..........#",
-              "#...####...#",
-              "#...F..W...#",
-              "#...F..W...#",
-              "############"
+            { "########################",
+              "#......................#",
+              "#......................#",
+              "#......................#",
+              "#......................#",
+              "#...F..W...............#",
+              "#...F..W...............#",
+              "########################"
             });
             Levels[1] = new Level(1, new string[]
             { "############",
