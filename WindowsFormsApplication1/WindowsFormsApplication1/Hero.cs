@@ -39,7 +39,7 @@ namespace FireAndWaterGame
         public Hero(Point position, ElementType type, Field field)
         {
             Position = new Point(position.X, position.Y);
-            Position = new Point(position.X, position.Y);
+            StartPosition = new Point(position.X, position.Y);
             Type = type;
             Field = field;
         }

@@ -16,14 +16,15 @@ namespace FireAndWaterGame
         public readonly int Width;
         public readonly List<IMovingObjects> MovingObjects;
 
-        public Field(Level level)
+        public Field(Level level, Game game)
         {
             var map = level.Map;
             Heigh = map.Length;
             Width = map[0].Length;
             field = new List<List<Terrain>>();
 
-            Hero waterHero = null, fireHero = null;
+            game.WaterHero = null;
+            game.FireHero = null;
 
             foreach (var row in Enumerable.Range(0, Heigh))
             {
@@ -52,15 +53,15 @@ namespace FireAndWaterGame
                     var heroPosition = new Point(
                         position.X + (Constants.TerrainSquareLength - Constants.HeroWidth) / 2,
                         position.Y + (Constants.TerrainSquareLength * 2 - Constants.HeroHeigh));
-                    if (symbol == 'W' && waterHero == null)
+                    if (symbol == 'W' && game.WaterHero == null)
                     {
-                        waterHero = new Hero(heroPosition, ElementType.Water, this);
-                        MovingObjects.Add(waterHero);
+                        game.WaterHero = new Hero(heroPosition, ElementType.Water, this);
+                        MovingObjects.Add(game.WaterHero);
                     }
-                    if (symbol == 'F' && fireHero == null)
+                    if (symbol == 'F' && game.FireHero == null)
                     {
-                        fireHero = new Hero(heroPosition, ElementType.Fire, this);
-                        MovingObjects.Add(fireHero);
+                        game.FireHero = new Hero(heroPosition, ElementType.Fire, this);
+                        MovingObjects.Add(game.FireHero);
                     }
                 }
                 
