@@ -10,9 +10,8 @@ namespace FireAndWaterGame
     {
         public readonly Level Level; // ? public ?
         public Field Field { get; private set; }
-        public Hero WaterHero { get; set; }
-        public Hero FireHero { get; set; }
 
+        
 
         public Game() : this(0)
         {
@@ -26,6 +25,12 @@ namespace FireAndWaterGame
         {
             this.Level = level;
             InitializeLevel();
+        }
+
+        public void Tick()
+        {
+            Field.WaterHero.RealiseMoves();
+            Field.FireHero.RealiseMoves();
         }
 
         private void InitializeLevel()
