@@ -17,12 +17,8 @@ namespace WindowsFormsApplication1
             ClientSize = new Size(Constants.TerrainSquareLength * game.Field.Width, 
                                     Constants.TerrainSquareLength * game.Field.Heigh);
             BackgroundImage = Image.FromFile(@"A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\background.jpg");
-
-            
-
-            
-            Paint += (sender, args) =>
-            {
+ 
+            PaintEventHandler drawingField = (sender, args) => {
                 var myGraphics = CreateGraphics();
                 for (var row = 0; row < game.Field.Heigh; row++)
                     for (var column = 0; column < game.Field.Width; column++)
@@ -35,7 +31,17 @@ namespace WindowsFormsApplication1
                         }
                     }
             };
+            var myOwnGraphics = CreateGraphics();
+            PaintEventHandler drawingHeroes = (sender, args) => {
+                //???Поменять картинку на прямоугольник с кистью картинки
+                Bitmap myBitmap = new Bitmap(@"A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\simple_fire.jpg");
+                myOwnGraphics.DrawImage(myBitmap, game.Field.MovingObjects[0].Position);
+            };
+
+            Paint += drawingField + drawingHeroes;
             Invalidate();
+            //Paint -= drawingField;
+            
 
         }
     }

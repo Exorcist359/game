@@ -32,6 +32,7 @@ namespace FireAndWaterGame
             var map = level.Map;
             Heigh = map.Length;
             Width = map[0].Length;
+            MovingObjects = new List<IMovingObjects>();
             field = new Terrain[Heigh][];
 
             Hero waterHero = null, fireHero = null;
@@ -75,7 +76,6 @@ namespace FireAndWaterGame
                 }
                 
             }
-            int x = 0;
             //MovingObjects =
         }
     }
