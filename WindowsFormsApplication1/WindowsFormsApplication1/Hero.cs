@@ -69,6 +69,7 @@ namespace FireAndWaterGame
         {
             foreach (var terr in Field)
             {
+                if (terr.Type == TerrainType.Empty) continue;
                 var terrRect = new Rectangle(terr.Position, terr.Size);
                 if (heroRect.IntersectsWith(terrRect))
                 {

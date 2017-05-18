@@ -35,13 +35,19 @@ namespace WindowsFormsApplication1
             PaintEventHandler drawingHeroes = (sender, args) => {
                 //???Поменять картинку на прямоугольник с кистью картинки
                 Bitmap myBitmap = new Bitmap(@"A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\simple_fire.jpg");
-                myOwnGraphics.DrawImage(myBitmap, game.Field.MovingObjects[0].Position);
+                myOwnGraphics.DrawImage(myBitmap, game.FireHero.StartPosition);
             };
 
             Paint += drawingField + drawingHeroes;
             Invalidate();
-            //Paint -= drawingField;
 
+            KeyPress += (sender, args) =>
+            {
+                if (args.KeyChar.ToString().ToLower() == "d")
+                    game.FireHero.MoveRight();
+                Invalidate();
+            };
+            
         }
     }
 }
