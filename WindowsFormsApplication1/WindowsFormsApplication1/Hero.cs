@@ -72,9 +72,12 @@ namespace FireAndWaterGame
                 if (terr.Type == TerrainType.Empty)
                     continue;
                 var terrRect = new Rectangle(terr.Position, terr.Size);
+                
                 if (heroRect.IntersectsWith(terrRect))
                 {
-                    return true;
+                    terrRect.Intersect(heroRect);
+                    if (!terrRect.IsEmpty)
+                        return true;
                 }
             }
             return false;
