@@ -11,7 +11,7 @@ namespace FireAndWaterGame
     {
         public static readonly int koef = 100;
         public static readonly Dictionary<int, Level> Levels;
-        public static readonly int TerrainSquareLength = 5000;
+        public static readonly int TerrainSquareLength = 2500;
         public static readonly int HeroHeigh = 7000;
         public static readonly int HeroWidth = 4000;
         public static readonly int Step = 1000;
@@ -30,9 +30,9 @@ namespace FireAndWaterGame
               "#..........#",
               "#..........#",
               "#..........#",
-              "#...####...#",
-              "#...F..W...#",
-              "#...F..W...#",
+              "#..FF..WW..#",
+              "#..FF..WW..#",
+              "#..FF..WW..#",
               "############"
             });
             Levels[1] = new Level(1, new string[]
@@ -50,9 +50,9 @@ namespace FireAndWaterGame
               "#..........#",
               "#..........#",
               "#..........#",
-              "#...####...#",
-              "#...F..W...#",
-              "#...F..W...#",
+              "#..FF..WW..#",
+              "#..FF..WW..#",
+              "#..FF..WW..#",
               "############"
              });
         }

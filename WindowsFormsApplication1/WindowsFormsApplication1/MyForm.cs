@@ -15,9 +15,9 @@ namespace WindowsFormsApplication1
         {
             DoubleBuffered = true;
             var game = new Game();
-            ClientSize = new Size(Constants.TerrainSquareLength * game.Field.Width, 
-                                    Constants.TerrainSquareLength * game.Field.Heigh);
-            BackgroundImage = Image.FromFile(@"A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\background.jpg");
+            ClientSize = new Size(Constants.TerrainSquareLength * game.Field.Width / Constants.koef, 
+                                    Constants.TerrainSquareLength * game.Field.Heigh / Constants.koef);
+            BackgroundImage = Image.FromFile(@"C:\Users\dns\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\background.jpg");
  
             PaintEventHandler drawingField = (sender, args) => {
                 for (var row = 0; row < game.Field.Heigh; row++)
@@ -25,19 +25,19 @@ namespace WindowsFormsApplication1
                     {
                         if (game.Field[row, column].Type == TerrainType.FullSquare)
                         {
-                            Bitmap myBitmap = new Bitmap(@"A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\simple_terrain.jpg");
-                            args.Graphics.DrawImage(myBitmap, game.Field[row, column].Position);
+                            Bitmap myBitmap = new Bitmap(@"C:\Users\dns\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\simple_terrain.jpg");
+                            args.Graphics.DrawImage(myBitmap, new Point(game.Field[row, column].Position.X / Constants.koef, game.Field[row, column].Position.Y / Constants.koef));
 
                         }
                     }
-                Bitmap hero = new Bitmap(@"A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\simple_fire.jpg");
-                args.Graphics.DrawImage(hero, game.Field.FireHero.Position);
-                hero = new Bitmap(@"A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\simple_water.jpg");
-                args.Graphics.DrawImage(hero, game.Field.WaterHero.Position);
+                Bitmap hero = new Bitmap(@"C:\Users\dns\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\simple_fire.jpg");
+                args.Graphics.DrawImage(hero, new Point(game.Field.FireHero.Position.X / Constants.koef, game.Field.FireHero.Position.Y / Constants.koef));
+                hero = new Bitmap(@"C:\Users\dns\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\simple_water.jpg");
+                args.Graphics.DrawImage(hero, new Point(game.Field.WaterHero.Position.X / Constants.koef, game.Field.WaterHero.Position.Y / Constants.koef));
             };
 
             Paint += drawingField;
-            Invalidate();
+             Invalidate();
             KeyDown += (sender, args) =>
             {
                 //if (args.KeyCode == Keys.D)
@@ -48,6 +48,10 @@ namespace WindowsFormsApplication1
 
                 switch (args.KeyCode)
                 {
+                    case Keys.W:
+                        game.Field.FireHero.Jump();
+                        break;
+
                     case Keys.D:
                         game.Field.FireHero.MoveRight();
                         break;
@@ -69,10 +73,11 @@ namespace WindowsFormsApplication1
 
             var time = 0;
             var timer = new Timer();
-            timer.Interval = 50;
+            timer.Interval = 5;
             timer.Tick += (sender, args) =>
             {
                 time++;
+                game.Tick();
                 Invalidate();
             };
             timer.Start();
