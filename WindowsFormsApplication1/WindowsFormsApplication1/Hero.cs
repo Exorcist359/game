@@ -28,7 +28,8 @@ namespace FireAndWaterGame
             }
         }
         private List<Point> Moves;
-
+        private List<Point> Speeds;
+ 
         public Size Size
         {
             get
@@ -44,18 +45,43 @@ namespace FireAndWaterGame
             Type = type;
             Field = field;
             Moves = new List<Point>();
+            Speeds = new List<Point>();
         }
 
         public void RealiseMoves()
         {
-            foreach(var move in Moves)
+            var newSpeeds = new List<Point>();
+            Speeds.Add(Constants.Gravity);
+            foreach (var speed in Speeds)
             {
-                var newPosition = new Point(Position.X + move.X, Position.Y + move.Y);
-                MoveOnNewPosition(newPosition);
+                if (TryToMove(speed))
+                {
+                    var newSpeed = new Point(
+                      speed.X + Constants.Gravity.X,
+                      speed.Y + Constants.Gravity.Y);
+                    //if (newSpeed.X != 0 || newSpeed.Y != 0)
+                    newSpeeds.Add(newSpeed);
+                }
+            }
+            Speeds = newSpeeds;
+            foreach (var move in Moves)
+            {
+                TryToMove(move);
             }
             Moves = new List<Point>();
         }
 
+        private bool TryToMove(Point move)
+        {
+            var newPosition = new Point(Position.X + move.X, Position.Y + move.Y);
+            var rect = new Rectangle(newPosition, Size);
+            if (!DoesIntersect(rect))
+            {
+                Position = newPosition;
+                return true;
+            }
+            return false;
+        }
         public void MoveLeft()
         {
             var move = new Point(-Constants.Step, 0);
@@ -68,13 +94,22 @@ namespace FireAndWaterGame
             Moves.Add(move);
         }
 
+        public void Jump()
+        {
+            var speed = new Point(0, Constants.JumpSpeed);
+            Speeds.Add(speed);
+        }
+
+        public void MoveDown()
+        {
+        }
+
+        public void MoveUp()
+        {
+        }
+
         private void MoveOnNewPosition(Point newPosition)
         {
-            var rect = new Rectangle(newPosition, Size);
-            if (!DoesIntersect(rect))
-            {
-                Position = newPosition;
-            }
         }
 
         private bool DoesIntersect(Rectangle heroRect)
@@ -84,7 +119,7 @@ namespace FireAndWaterGame
                 if (terr.Type == TerrainType.Empty)
                     continue;
                 var terrRect = new Rectangle(terr.Position, terr.Size);
-                
+
                 if (heroRect.IntersectsWith(terrRect))
                 {
                     terrRect.Intersect(heroRect);
@@ -95,17 +130,5 @@ namespace FireAndWaterGame
             return false;
         }
 
-        public void Jump()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void MoveDown()
-        {
-        }
-
-        public void MoveUp()
-        {
-        }
     }
 }
