@@ -62,7 +62,6 @@ namespace WindowsFormsApplication1
                         break;
 
                     case Keys.W:
-                        game.Field.FireHero.MoveLeft();
                         game.Field.FireHero.Jump();
                         break;
 
