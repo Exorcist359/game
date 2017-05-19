@@ -11,8 +11,6 @@ namespace FireAndWaterGame
         public readonly Level Level; // ? public ?
         public Field Field { get; private set; }
 
-        
-
         public Game() : this(0)
         {
         }
@@ -29,7 +27,7 @@ namespace FireAndWaterGame
 
         public void Tick()
         {
-            Field.WaterHero.RealiseMoves();
+       //     Field.WaterHero.RealiseMoves();
             Field.FireHero.RealiseMoves();
         }
 

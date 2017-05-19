@@ -15,8 +15,11 @@ namespace FireAndWaterGame
         public readonly int Heigh;
         public readonly int Width;
         public readonly List<IMovingObjects> MovingObjects;
+        public readonly List<Surface> Danger;
         public readonly Hero WaterHero;
         public readonly Hero FireHero;
+        public readonly Exit WaterExit;
+        public readonly Exit FireExit;
 
         public Field(Level level, Game game)
         {
@@ -26,6 +29,7 @@ namespace FireAndWaterGame
             MovingObjects = new List<IMovingObjects>();
             field = new List<List<Terrain>>();
             MovingObjects = new List<IMovingObjects>();
+            Danger = new List<Surface>();
             WaterHero = null;
             FireHero = null;
 
@@ -38,19 +42,47 @@ namespace FireAndWaterGame
                     var position = new Point(
                         column * Constants.TerrainSquareLength,
                         row * Constants.TerrainSquareLength);
+                    var surfacePosition = new Point(
+                        position.X + Constants.SurfaceIndent.X, 
+                        position.Y + Constants.SurfaceIndent.Y);
                     var symbol = map[row][column];
                     if (symbol == '#')
-                        list.Add(new Terrain(position, TerrainType.FullSquare, row, column));
+                        list.Add(new Terrain(position, TerrainType.FullSquare, SurfaceType.Empty, row, column));
                     else if (symbol == '\\')
-                        list.Add(new Terrain(position, TerrainType.DownLeftTriangle, row, column));
+                        list.Add(new Terrain(position, TerrainType.DownLeftTriangle, SurfaceType.Empty, row, column));
                     else if (symbol == '/')
-                        list.Add(new Terrain(position, TerrainType.DownRightTriangle, row, column));
+                        list.Add(new Terrain(position, TerrainType.DownRightTriangle, SurfaceType.Empty, row, column));
                     else if (symbol == 'L')
-                        list.Add(new Terrain(position, TerrainType.DownLeftTriangle, row, column));
+                        list.Add(new Terrain(position, TerrainType.DownLeftTriangle, SurfaceType.Empty, row, column));
                     else if (symbol == 'R')
-                        list.Add(new Terrain(position, TerrainType.DownLeftTriangle, row, column));
+                        list.Add(new Terrain(position, TerrainType.DownLeftTriangle, SurfaceType.Empty, row, column));
+                    else if (symbol == 'm')
+                    {
+                        list.Add(new Terrain(position, TerrainType.FullSquare, SurfaceType.Mud, row, column));
+                        Danger.Add(new Surface(surfacePosition, SurfaceType.Mud));
+                    }
+                    else if (symbol == 'f')
+                    {
+                        list.Add(new Terrain(position, TerrainType.FullSquare, SurfaceType.Fire, row, column));
+                        Danger.Add(new Surface(surfacePosition, SurfaceType.Fire));
+                    }
+                    else if (symbol == 'w')
+                    {
+                        list.Add(new Terrain(position, TerrainType.FullSquare, SurfaceType.Water, row, column));
+                        Danger.Add(new Surface(surfacePosition, SurfaceType.Water));
+                    }
+                    else if (symbol == 'B')
+                    {
+                        WaterExit = new Exit(surfacePosition, ElementType.Water);
+                        list.Add(new Terrain(position, TerrainType.FullSquare, SurfaceType.Empty, row, column));
+                    }
+                    else if (symbol == 'O')
+                    {
+                        FireExit = new Exit(surfacePosition, ElementType.Fire);
+                        list.Add(new Terrain(position, TerrainType.FullSquare, SurfaceType.Empty, row, column));
+                    }
                     else
-                        list.Add(new Terrain(position, TerrainType.Empty, row, column));
+                        list.Add(new Terrain(position, TerrainType.Empty, SurfaceType.Empty, row, column));
 
                     var heroPosition = new Point(
                         position.X + (Constants.TerrainSquareLength * 2 - Constants.HeroWidth) / 2,

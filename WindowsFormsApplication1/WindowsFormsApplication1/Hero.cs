@@ -14,6 +14,13 @@ namespace FireAndWaterGame
         public Point Position { get; private set; }
         public Point StartPosition { get; private set; }
         public Field Field { get; private set; }
+        public bool IsDying { get; private set; }
+        public bool IsDead { get; private set; }
+        public int TimeToDeath { get; private set; }
+        public bool Win { get; private set; }
+        private List<Point> Moves;
+        private List<Point> Speeds;
+
         public string Image
         {
             get
@@ -27,9 +34,7 @@ namespace FireAndWaterGame
                 return "images//simple" + typeName;
             }
         }
-        private List<Point> Moves;
-        private List<Point> Speeds;
- 
+
         public Size Size
         {
             get
@@ -46,10 +51,55 @@ namespace FireAndWaterGame
             Field = field;
             Moves = new List<Point>();
             Speeds = new List<Point>();
+            IsDying = false;
+            IsDead = false;
+            TimeToDeath = Constants.DyingTimeInTicks;
+        }
+
+        public void MoveLeft()
+        {
+            var move = new Point(-Constants.Step, 0);
+            Moves.Add(move);
+        }
+
+        public void MoveRight()
+        {
+            var move = new Point(Constants.Step, 0);
+            Moves.Add(move);
+        }
+
+        public void Jump()
+        {
+            if (Speeds.Count == 1)
+            {
+                var speed = new Point(0, Constants.JumpSpeed);
+                Speeds.Add(speed);
+            }
+        }
+
+        public void MoveDown()
+        {
+        }
+
+        public void MoveUp()
+        {
         }
 
         public void RealiseMoves()
         {
+            if (IsDead || Win)
+            {
+                return;
+            }
+            if (IsDying)
+            {
+                TimeToDeath--;
+                if (TimeToDeath == 0)
+                {
+                    IsDead = true;
+                }
+                return;
+            }
             var newSpeeds = new List<Point>();
             Point sum = new Point(0,0);
             foreach (var speed in Speeds)
@@ -77,70 +127,110 @@ namespace FireAndWaterGame
                 Speeds = new List<Point>();
                 Speeds.Add(Constants.Gravity);
             }
+
             foreach (var move in Moves)
             {
+                //sum = new Point(sum.X + move.X, sum.Y + move.Y);
                 TryToMove(move);
             }
             Moves = new List<Point>();
+
+            if (IsInDanger())
+            {
+                IsDying = true;
+            }
+            if (IsOnExit())
+            {
+                Win = true;
+            }
+        }
+
+        private bool IsOnExit()
+        {
+            Exit exit;
+            if (Type == ElementType.Water)
+                exit = Field.WaterExit;
+            else
+                exit = Field.FireExit;
+            var exitRect = new Rectangle(exit.Position, exit.Size);
+            if (IsIntersectedWith(exitRect))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsInDanger()
+        {
+            foreach (var surface in Field.Danger
+                .Where(sur => sur.Type.ToString() != this.Type.ToString()))
+            {
+                var surfaceRect = new Rectangle(surface.Position, surface.Size);
+                if (IsIntersectedWith(surfaceRect))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private bool TryToMove(Point move)
         {
             var newPosition = new Point(Position.X + move.X, Position.Y + move.Y);
             var rect = new Rectangle(newPosition, Size);
-            if (!DoesIntersect(rect))
+            if (GeometryAndArithmetic.InRange(Position.X, 0, Field.Width * Constants.TerrainSquareLength) &&
+                GeometryAndArithmetic.InRange(Position.Y, 0, Field.Heigh * Constants.TerrainSquareLength))
             {
-                Position = newPosition;
-                return true;
+                if (!DoesIntersect(rect))
+                {
+                    if (GeometryAndArithmetic.InRange(Position.X, 0, Field.Width * Constants.TerrainSquareLength) &&
+                        GeometryAndArithmetic.InRange(Position.Y, 0, Field.Heigh * Constants.TerrainSquareLength))
+                    {
+                        Position = newPosition;
+                        return true;
+                    }
+                }
             }
             return false;
-        }
-        public void MoveLeft()
-        {
-            var move = new Point(-Constants.Step, 0);
-            Moves.Add(move);
-        }
-
-        public void MoveRight()
-        {
-            var move = new Point(Constants.Step, 0);
-            Moves.Add(move);
-        }
-
-        public void Jump()
-        {
-            var speed = new Point(0, Constants.JumpSpeed);
-            Speeds.Add(speed);
-        }
-
-        public void MoveDown()
-        {
-        }
-
-        public void MoveUp()
-        {
-        }
-
-        private void MoveOnNewPosition(Point newPosition)
-        {
         }
 
         private bool DoesIntersect(Rectangle heroRect)
         {
-            foreach (var terr in Field)
-            {
-                if (terr.Type == TerrainType.Empty)
-                    continue;
-                var terrRect = new Rectangle(terr.Position, terr.Size);
+            //foreach (var terr in Field)
+            //{
+            //    if (terr.Type == TerrainType.Empty)
+            //    {
+            //        continue;
+            //    }
+            //    var terrRect = new Rectangle(terr.Position, terr.Size);
+            //    if (IsIntersectedWith(terrRect))
+            //    {
+            //        return true;
+            //    }
+            //}
+            //return false;
+            return Field
+                .Where(terrain => terrain.Type != TerrainType.Empty)
+                .Select(terrain => new Rectangle(terrain.Position, terrain.Size))
+                .Any(rect => AreIntersected(heroRect, rect));
 
-                if (heroRect.IntersectsWith(terrRect))
-                {
-                    terrRect.Intersect(heroRect);
-                    if (!terrRect.IsEmpty)
-                        return true;
-                }
+        }
+
+        private bool AreIntersected(Rectangle rect1, Rectangle rect2)
+        {
+            if (rect1.IntersectsWith(rect2))
+            {
+                var r = new Rectangle(rect2.Location, rect2.Size);
+                r.Intersect(rect1);
+                return !r.IsEmpty;
             }
             return false;
+        }
+
+        private bool IsIntersectedWith(Rectangle toIntersect)
+        {
+            var currentState = new Rectangle(Position, Size);
+            return AreIntersected(currentState, toIntersect);
         }
 
     }
