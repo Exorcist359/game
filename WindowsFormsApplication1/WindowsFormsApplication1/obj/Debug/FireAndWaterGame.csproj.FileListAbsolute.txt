@@ -10,3 +10,9 @@ A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\Windo
 A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form1.resources
 A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
 A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\FireAndWaterGame.csproj.GenerateResource.Cache
+C:\Users\dns\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\FireAndWaterGame.csprojResolveAssemblyReference.cache
+C:\Users\dns\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form1.resources
+C:\Users\dns\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\dns\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\FireAndWaterGame.csproj.GenerateResource.Cache
+C:\Users\dns\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+C:\Users\dns\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb

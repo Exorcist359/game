@@ -51,19 +51,32 @@ namespace FireAndWaterGame
         public void RealiseMoves()
         {
             var newSpeeds = new List<Point>();
-            Speeds.Add(Constants.Gravity);
+            Point sum = new Point(0,0);
             foreach (var speed in Speeds)
             {
-                if (TryToMove(speed))
-                {
-                    var newSpeed = new Point(
-                      speed.X + Constants.Gravity.X,
-                      speed.Y + Constants.Gravity.Y);
-                    //if (newSpeed.X != 0 || newSpeed.Y != 0)
-                    newSpeeds.Add(newSpeed);
-                }
+                sum = new Point(sum.X + speed.X, sum.Y + speed.Y);
             }
-            Speeds = newSpeeds;
+            if (TryToMove(sum))
+            {
+                Speeds.Add(Constants.Gravity);
+                //foreach (var speed in Speeds)
+                //{
+                //    var newSpeed = new Point(
+                //  speed.X + Constants.Gravity.X,
+                //  speed.Y + Constants.Gravity.Y);
+                //    //if (newSpeed.X != 0 || newSpeed.Y != 0)
+                //    newSpeeds.Add(newSpeed);
+                //}
+            }
+            else
+            {
+                while (!TryToMove(sum))
+                {
+                    sum = new Point(sum.X / 2, sum.Y / 2);
+                }
+                Speeds = new List<Point>();
+                Speeds.Add(Constants.Gravity);
+            }
             foreach (var move in Moves)
             {
                 TryToMove(move);

@@ -18,8 +18,7 @@ namespace WindowsFormsApplication1
             ClientSize = new Size(Constants.TerrainSquareLength * game.Field.Width / Constants.koef, 
                                     Constants.TerrainSquareLength * game.Field.Heigh / Constants.koef);
 
-            var path = @"A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\";
-
+            var path = @"C:\Users\dns\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\";
             BackgroundImage = Image.FromFile(path + "background.jpg");
 
             var fireImg = Image.FromFile(path + "fireboy_face.png");
@@ -50,6 +49,9 @@ namespace WindowsFormsApplication1
             {
                 switch (args.KeyCode)
                 {
+                    case Keys.W:
+                        game.Field.FireHero.Jump();
+                        break;
 
                     case Keys.D:
                         game.Field.FireHero.MoveRight();
@@ -89,7 +91,7 @@ namespace WindowsFormsApplication1
 
             var time = 0;
             var timer = new Timer();
-            timer.Interval = 50;
+            timer.Interval = 5;
             timer.Tick += (sender, args) =>
             {
                 time++;
