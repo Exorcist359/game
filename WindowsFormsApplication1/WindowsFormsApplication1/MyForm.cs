@@ -18,12 +18,14 @@ namespace WindowsFormsApplication1
             ClientSize = new Size(Constants.TerrainSquareLength * game.Field.Width / Constants.koef, 
                                     Constants.TerrainSquareLength * game.Field.Heigh / Constants.koef);
 
-            var path = @"C:\Users\dns\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\";
+            var path = @"A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\";
             BackgroundImage = Image.FromFile(path + "background.jpg");
 
             var fireImg = Image.FromFile(path + "fireboy_face.png");
-            var waterImg = Image.FromFile(path + "simple_water.jpg");
+            var waterImg = Image.FromFile(path + "watergirl_face.png");
             var terrainImg = Image.FromFile(path + "terrain.png");
+            var redDoor = Image.FromFile(path + "redDoor.png");
+            var blueDoor = Image.FromFile(path + "blueDoor.png");
 
             PaintEventHandler drawingField = (sender, args) => {
                 foreach (var cell in game.Field)
@@ -34,6 +36,9 @@ namespace WindowsFormsApplication1
                                 cell.Position.Y / Constants.koef);
                         }
                 
+                //args.Graphics.DrawImage(redDoor,
+                //                    game.Field)
+
                 args.Graphics.DrawImage(fireImg, 
                     game.Field.FireHero.Position.X / Constants.koef, 
                     game.Field.FireHero.Position.Y / Constants.koef);
@@ -49,10 +54,6 @@ namespace WindowsFormsApplication1
             {
                 switch (args.KeyCode)
                 {
-                    case Keys.W:
-                        game.Field.FireHero.Jump();
-                        break;
-
                     case Keys.D:
                         game.Field.FireHero.MoveRight();
                         fireImg = Image.FromFile(path + "fireboyR.png");
@@ -69,10 +70,16 @@ namespace WindowsFormsApplication1
 
                     case Keys.Right:
                         game.Field.WaterHero.MoveRight();
+                        waterImg = Image.FromFile(path + "watergirlR.png");
                         break;
 
                     case Keys.Left:
                         game.Field.WaterHero.MoveLeft();
+                        waterImg = Image.FromFile(path + "watergirlL.png");
+                        break;
+
+                    case Keys.Up:
+                        game.Field.WaterHero.Jump();
                         break;
                 }
                 
@@ -85,6 +92,11 @@ namespace WindowsFormsApplication1
                     case Keys.D:
                     case Keys.A:
                         fireImg = Image.FromFile(path + "fireboy_face.png");
+                        break;
+
+                    case Keys.Right:
+                    case Keys.Left:
+                        waterImg = Image.FromFile(path + "watergirl_face.png");
                         break;
                 }
             };
