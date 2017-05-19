@@ -11,6 +11,22 @@ namespace WindowsFormsApplication1
 {
     class MyForm : Form
     {
+
+        private static string path = @"A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\";
+        private Image fireImg = Image.FromFile(path + "fireboy_face.png");
+        private Image waterImg = Image.FromFile(path + "watergirl_face.png");
+        private Image terrainImg = Image.FromFile(path + "terrain.png");
+        private Image mudTerrainImg = Image.FromFile(path + "terrain_mud.png");
+        private Image fireTerrainImg = Image.FromFile(path + "terrain_fire.png");
+        private Image waterTerrainImg = Image.FromFile(path + "terrain_water.png");
+        private Image redDoor = Image.FromFile(path + "redDoor.png");
+        private Image blueDoor = Image.FromFile(path + "blueDoor.png");
+        private Image endImg = Image.FromFile(path + "end.png");
+        
+        bool isUp = false;
+        bool isR = false;
+        bool isL = false;
+
         public MyForm()
         {
             DoubleBuffered = true;
@@ -18,19 +34,8 @@ namespace WindowsFormsApplication1
             ClientSize = new Size(Constants.TerrainSquareLength * game.Field.Width / Constants.koef, 
                                     Constants.TerrainSquareLength * game.Field.Heigh / Constants.koef);
 
-            var path = @"A:\Users\Александр\Documents\GitHub\game\WindowsFormsApplication1\WindowsFormsApplication1\images\";
             BackgroundImage = Image.FromFile(path + "background.jpg");
-
-            var fireImg = Image.FromFile(path + "fireboy_face.png");
-            var waterImg = Image.FromFile(path + "watergirl_face.png");
-            var terrainImg = Image.FromFile(path + "terrain.png");
-            var mudTerrainImg = Image.FromFile(path + "terrain_mud.png");
-            var fireTerrainImg = Image.FromFile(path + "terrain_fire.png");
-            var waterTerrainImg = Image.FromFile(path + "terrain_water.png");
-            var redDoor = Image.FromFile(path + "redDoor.png");
-            var blueDoor = Image.FromFile(path + "blueDoor.png");
-
-
+            
             PaintEventHandler drawingField = (sender, args) =>
             {
                 foreach (var cell in game.Field)
@@ -49,17 +54,20 @@ namespace WindowsFormsApplication1
                             cell.Position.Y / Constants.koef);
                     }
 
-                args.Graphics.DrawImage(fireImg,
-                    game.Field.FireHero.Position.X / Constants.koef,
-                        if (cell.Type == TerrainType.FullSquare)
-                        {
-                            args.Graphics.DrawImage(terrainImg, 
-                                cell.Position.X / Constants.koef, 
-                                cell.Position.Y / Constants.koef);
-                        }
-                
-                //args.Graphics.DrawImage(redDoor,
-                //                    game.Field)
+                if (game.Field.FireHero.IsDying || game.Field.WaterHero.IsDying)
+                {
+                    args.Graphics.DrawImage(endImg,
+                                    ClientSize.Width/50, ClientSize.Height/50);
+                    
+                }
+
+                args.Graphics.DrawImage(redDoor,
+                                    game.Field.FireExit.Position.X / Constants.koef - 25,
+                                    game.Field.FireExit.Position.Y / Constants.koef - 93);
+
+                args.Graphics.DrawImage(blueDoor,
+                                    game.Field.WaterExit.Position.X / Constants.koef - 25,
+                                    game.Field.WaterExit.Position.Y / Constants.koef - 93);
 
                 args.Graphics.DrawImage(fireImg, 
                     game.Field.FireHero.Position.X / Constants.koef, 
@@ -71,57 +79,11 @@ namespace WindowsFormsApplication1
             };
 
             Paint += drawingField;
+            var keys = new List<Keys>();
 
-            KeyDown += (sender, args) =>
-            {
-                switch (args.KeyCode)
-                {
-                    case Keys.D:
-                        game.Field.FireHero.MoveRight();
-                        fireImg = Image.FromFile(path + "fireboyR.png");
-                        break;
-                        
-                    case Keys.A:
-                        game.Field.FireHero.MoveLeft();
-                        fireImg = Image.FromFile(path + "fireboyL.png");
-                        break;
+            KeyDown += MyForm_KeyDown;
 
-                    case Keys.W:
-                        game.Field.FireHero.Jump();
-                        break;
-
-                    case Keys.Right:
-                        game.Field.WaterHero.MoveRight();
-                        waterImg = Image.FromFile(path + "watergirlR.png");
-                        break;
-
-                    case Keys.Left:
-                        game.Field.WaterHero.MoveLeft();
-                        waterImg = Image.FromFile(path + "watergirlL.png");
-                        break;
-
-                    case Keys.Up:
-                        game.Field.WaterHero.Jump();
-                        break;
-                }
-                
-            };
-
-            KeyUp += (sender, args) =>
-            {
-                switch (args.KeyCode)
-                {
-                    case Keys.D:
-                    case Keys.A:
-                        fireImg = Image.FromFile(path + "fireboy_face.png");
-                        break;
-
-                    case Keys.Right:
-                    case Keys.Left:
-                        waterImg = Image.FromFile(path + "watergirl_face.png");
-                        break;
-                }
-            };
+            KeyUp += MyForm_KeyUp;
 
             var time = 0;
             var timer = new Timer();
@@ -130,10 +92,78 @@ namespace WindowsFormsApplication1
             {
                 time++;
                 game.Tick();
+                DoMoving(game);
                 Invalidate();
-
             };
             timer.Start();
         }
+
+        private void MyForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.W)
+                isUp = true;
+            if (e.KeyCode == Keys.A)
+                isL = true;
+            if (e.KeyCode == Keys.D)
+                isR = true;
+        }
+
+
+        private void MyForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.W)
+                isUp = false;
+            if (e.KeyCode == Keys.A)
+                isL = false;
+            if (e.KeyCode == Keys.D)
+                isR = false;
+        }
+
+        public void DoMoving(Game game)
+        {
+            if (isUp)
+            {
+                game.Field.FireHero.Jump();
+                isUp = false;
+            }
+            if (isL)
+            {
+                game.Field.FireHero.MoveLeft();
+                fireImg = Image.FromFile(path + "fireboyL.png");
+            }
+            if (isR)
+            {
+                game.Field.FireHero.MoveRight();
+                fireImg = Image.FromFile(path + "fireboyR.png");
+            //}
+            //foreach (var key in keys)
+            //    switch (key)
+            //        {
+            //            case Keys.D:
+            //                break;
+
+            //            case Keys.A:
+            //                break;
+
+            //            case Keys.W:
+
+            //                break;
+
+            //            case Keys.Right:
+            //                game.Field.WaterHero.MoveRight();
+            //                waterImg = Image.FromFile(path + "watergirlR.png");
+            //                break;
+
+            //            case Keys.Left:
+            //                game.Field.WaterHero.MoveLeft();
+            //                waterImg = Image.FromFile(path + "watergirlL.png");
+            //                break;
+
+            //            case Keys.Up:
+            //                game.Field.WaterHero.Jump();
+            //                break;
+                    }
+        }
+
     }
 }
