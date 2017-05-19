@@ -24,11 +24,33 @@ namespace WindowsFormsApplication1
             var fireImg = Image.FromFile(path + "fireboy_face.png");
             var waterImg = Image.FromFile(path + "watergirl_face.png");
             var terrainImg = Image.FromFile(path + "terrain.png");
+            var mudTerrainImg = Image.FromFile(path + "terrain_mud.png");
+            var fireTerrainImg = Image.FromFile(path + "terrain_fire.png");
+            var waterTerrainImg = Image.FromFile(path + "terrain_water.png");
             var redDoor = Image.FromFile(path + "redDoor.png");
             var blueDoor = Image.FromFile(path + "blueDoor.png");
 
-            PaintEventHandler drawingField = (sender, args) => {
+
+            PaintEventHandler drawingField = (sender, args) =>
+            {
                 foreach (var cell in game.Field)
+                    if (cell.Type == TerrainType.FullSquare)
+                    {
+                        var img = terrainImg;
+                        if (cell.Surface == SurfaceType.Mud)
+                            img = mudTerrainImg;
+                        if (cell.Surface == SurfaceType.Fire)
+                            img = fireTerrainImg;
+                        if (cell.Surface == SurfaceType.Water)
+                            img = waterTerrainImg;
+
+                        args.Graphics.DrawImage(img,
+                            cell.Position.X / Constants.koef,
+                            cell.Position.Y / Constants.koef);
+                    }
+
+                args.Graphics.DrawImage(fireImg,
+                    game.Field.FireHero.Position.X / Constants.koef,
                         if (cell.Type == TerrainType.FullSquare)
                         {
                             args.Graphics.DrawImage(terrainImg, 
@@ -42,7 +64,7 @@ namespace WindowsFormsApplication1
                 args.Graphics.DrawImage(fireImg, 
                     game.Field.FireHero.Position.X / Constants.koef, 
                     game.Field.FireHero.Position.Y / Constants.koef);
-                
+
                 args.Graphics.DrawImage(waterImg,
                     game.Field.WaterHero.Position.X / Constants.koef,
                     game.Field.WaterHero.Position.Y / Constants.koef);
